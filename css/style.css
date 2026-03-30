@@ -436,11 +436,13 @@ body {
 .signal-panel {
     display: flex;
     flex-direction: column;
+    max-height: 700px;
+    overflow-y: auto;
 }
 
 .chart-area {
-    flex: 1;
-    min-height: 250px;
+    height: 300px;
+    min-height: 200px;
     background: rgba(15, 23, 42, 0.5);
     border-radius: 12px;
     border: 1px solid var(--glass-border);
