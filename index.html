@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wingo Signal Pro - AI Trading VIP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <canvas id="bgCanvas"></canvas>
+    <div class="grid-overlay"></div>
+
+    <!-- App Container -->
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-section">
+                <div class="logo-icon pulse-glow">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <path d="M20 2L38 12V28L20 38L2 28V12L20 2Z" stroke="url(#logoGrad)" stroke-width="2" fill="none"/>
+                        <path d="M20 8L32 14V26L20 32L8 26V14L20 8Z" fill="url(#logoGrad)" opacity="0.3"/>
+                        <path d="M12 20L18 26L28 14" stroke="#00f5d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="logoGrad" x1="2" y1="2" x2="38" y2="38">
+                                <stop offset="0%" stop-color="#00f5d4"/>
+                                <stop offset="100%" stop-color="#7b2ff7"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>WINGO<span class="accent">SIGNAL</span></h1>
+                    <span class="badge-vip">VIP PRO</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="server-status">
+                    <span class="status-dot live"></span>
+                    <span class="status-text">AI SERVER LIVE</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Left Panel: Controls -->
+            <section class="panel controls-panel glass-card">
+                <h2 class="panel-title">
+                    <span class="icon-pulse"></span>
+                    TRADE SETUP
+                </h2>
+
+                <!-- Time Options -->
+                <div class="control-group">
+                    <label class="control-label">Time Options</label>
+                    <div class="time-options">
+                        <button class="time-btn" data-time="5">5s</button>
+                        <button class="time-btn active" data-time="30">30s</button>
+                        <button class="time-btn" data-time="60">1m</button>
+                    </div>
+                </div>
+
+                <!-- Currency Selector -->
+                <div class="control-group">
+                    <label class="control-label">Currency Pair</label>
+                    <div class="currency-selector">
+                        <select id="currencySelect" class="cyber-select">
+                            <optgroup label="Major Pairs">
+                                <option value="EUR/USD">EUR/USD</option>
+                                <option value="GBP/USD">GBP/USD</option>
+                                <option value="USD/JPY">USD/JPY</option>
+                                <option value="USD/CHF">USD/CHF</option>
+                                <option value="AUD/USD">AUD/USD</option>
+                                <option value="NZD/USD">NZD/USD</option>
+                                <option value="USD/CAD">USD/CAD</option>
+                            </optgroup>
+                            <optgroup label="OTC Pairs">
+                                <option value="EUR/USD OTC">EUR/USD (OTC)</option>
+                                <option value="GBP/USD OTC">GBP/USD (OTC)</option>
+                                <option value="USD/JPY OTC">USD/JPY (OTC)</option>
+                                <option value="AUD/USD OTC">AUD/USD (OTC)</option>
+                                <option value="GBP/JPY OTC">GBP/JPY (OTC)</option>
+                                <option value="EUR/GBP OTC">EUR/GBP (OTC)</option>
+                                <option value="NZD/USD OTC">NZD/USD (OTC)</option>
+                            </optgroup>
+                            <optgroup label="Crypto">
+                                <option value="BTC/USD">BTC/USD</option>
+                                <option value="ETH/USD">ETH/USD</option>
+                                <option value="BNB/USD">BNB/USD</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Predict Button -->
+                <div class="control-group predict-section">
+                    <button id="predictBtn" class="predict-btn">
+                        <span class="predict-btn-bg"></span>
+                        <span class="predict-btn-content">
+                            <svg class="predict-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span class="predict-text">PREDICT NOW</span>
+                        </span>
+                        <span class="predict-btn-shine"></span>
+                    </button>
+                </div>
+
+                <!-- Signal Strength -->
+                <div class="control-group">
+                    <label class="control-label">AI Confidence</label>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" id="confidenceFill">
+                            <span class="confidence-value" id="confidenceValue">--</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel: Signal Display -->
+            <section class="panel signal-panel glass-card">
+                <h2 class="panel-title">
+                    <span class="icon-pulse"></span>
+                    AI SIGNAL ANALYSIS
+                </h2>
+
+                <!-- Live Chart Area -->
+                <div class="chart-area">
+                    <canvas id="signalChart"></canvas>
+                </div>
+
+                <!-- Signal Result -->
+                <div class="signal-result" id="signalResult">
+                    <div class="signal-waiting">
+                        <div class="signal-orbit">
+                            <div class="orbit-ring"></div>
+                            <div class="orbit-ring delay-1"></div>
+                            <div class="orbit-ring delay-2"></div>
+                        </div>
+                        <p>Select options & tap <strong>PREDICT NOW</strong></p>
+                    </div>
+                </div>
+
+                <!-- Signal Details -->
+                <div class="signal-details" id="signalDetails" style="display:none;">
+                    <div class="detail-card">
+                        <span class="detail-label">Pair</span>
+                        <span class="detail-value" id="detailPair">--</span>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-label">Time</span>
+                        <span class="detail-value" id="detailTime">--</span>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-label">Direction</span>
+                        <span class="detail-value" id="detailDirection">--</span>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-label">Strength</span>
+                        <span class="detail-value" id="detailStrength">--</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: History -->
+            <section class="panel history-panel glass-card">
+                <div class="history-header">
+                    <h2 class="panel-title">
+                        <span class="icon-pulse"></span>
+                        PREDICT HISTORY
+                    </h2>
+                    <button id="clearHistoryBtn" class="clear-btn" title="Clear History">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                        CLEAR
+                    </button>
+                </div>
+                <div class="history-stats">
+                    <div class="stat-box">
+                        <span class="stat-num" id="totalSignals">0</span>
+                        <span class="stat-label">Total</span>
+                    </div>
+                    <div class="stat-box buy">
+                        <span class="stat-num" id="buyCount">0</span>
+                        <span class="stat-label">Buy</span>
+                    </div>
+                    <div class="stat-box sell">
+                        <span class="stat-num" id="sellCount">0</span>
+                        <span class="stat-label">Sell</span>
+                    </div>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="history-empty">
+                        <p>No predictions yet</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>WINGO SIGNAL PRO &bull; AI-Powered Trading Analysis &bull; VIP Premium</p>
+        </footer>
+
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
