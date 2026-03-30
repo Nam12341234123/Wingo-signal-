@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wingo Predict AI Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Background Particles -->
+    <div class="bg-particles" id="particles"></div>
+
+    <!-- Floating Orbs -->
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-section">
+                <div class="ai-icon">
+                    <div class="ai-ring"></div>
+                    <div class="ai-core">AI</div>
+                </div>
+                <div class="title-group">
+                    <h1 class="app-title">WINGO PREDICT</h1>
+                    <p class="app-subtitle">AI Analysis System</p>
+                </div>
+            </div>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span class="status-text">AI Server Online</span>
+            </div>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section glass-card">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h2>Enter Period Number</h2>
+            </div>
+            <div class="input-wrapper">
+                <input type="text" id="periodInput" class="period-input" placeholder="Enter Period Number ID..." autocomplete="off">
+                <div class="input-glow"></div>
+            </div>
+            <button id="predictBtn" class="predict-btn" onclick="startPrediction()">
+                <span class="btn-bg"></span>
+                <span class="btn-content">
+                    <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                    <span class="btn-text">PREDICT NOW</span>
+                </span>
+                <span class="btn-shine"></span>
+            </button>
+        </section>
+
+        <!-- AI Analysis Section -->
+        <section class="analysis-section glass-card" id="analysisSection" style="display:none;">
+            <div class="section-header">
+                <div class="section-icon pulse-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                </div>
+                <h2>AI Server Analysis</h2>
+                <span class="analysis-badge" id="analysisBadge">Processing</span>
+            </div>
+
+            <!-- Analysis Animation -->
+            <div class="analysis-animation" id="analysisAnim">
+                <div class="scan-line"></div>
+                <div class="data-streams">
+                    <div class="data-stream stream-1"></div>
+                    <div class="data-stream stream-2"></div>
+                    <div class="data-stream stream-3"></div>
+                </div>
+                <div class="analysis-progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="analysis-steps" id="analysisSteps">
+                    <div class="step" id="step1">
+                        <span class="step-dot"></span>
+                        <span>Connecting to AI Server...</span>
+                    </div>
+                    <div class="step" id="step2">
+                        <span class="step-dot"></span>
+                        <span>Fetching Pattern Data...</span>
+                    </div>
+                    <div class="step" id="step3">
+                        <span class="step-dot"></span>
+                        <span>Analyzing Big/Small Patterns...</span>
+                    </div>
+                    <div class="step" id="step4">
+                        <span class="step-dot"></span>
+                        <span>Computing Prediction...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Display -->
+            <div class="result-display" id="resultDisplay" style="display:none;">
+                <div class="result-period" id="resultPeriod"></div>
+                <div class="result-card" id="resultCard">
+                    <div class="result-label">AI Prediction</div>
+                    <div class="result-value" id="resultValue"></div>
+                    <div class="result-confidence">
+                        <span>Confidence:</span>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                        <span class="confidence-pct" id="confidencePct"></span>
+                    </div>
+                </div>
+                <div class="pattern-grid">
+                    <div class="pattern-item">
+                        <span class="pattern-label">Pattern</span>
+                        <span class="pattern-value" id="patternType"></span>
+                    </div>
+                    <div class="pattern-item">
+                        <span class="pattern-label">Trend</span>
+                        <span class="pattern-value" id="trendValue"></span>
+                    </div>
+                    <div class="pattern-item">
+                        <span class="pattern-label">Accuracy</span>
+                        <span class="pattern-value" id="accuracyValue"></span>
+                    </div>
+                    <div class="pattern-item">
+                        <span class="pattern-label">Signal</span>
+                        <span class="pattern-value" id="signalValue"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="history-section glass-card">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 8v4l3 3"/>
+                        <circle cx="12" cy="12" r="10"/>
+                    </svg>
+                </div>
+                <h2>Prediction History</h2>
+                <button class="clear-btn" id="clearBtn" onclick="clearHistory()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 6h18"/>
+                        <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                    </svg>
+                    <span>Clear All</span>
+                </button>
+            </div>
+            <div class="history-list" id="historyList">
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <rect x="2" y="3" width="20" height="18" rx="2"/>
+                            <path d="M8 7h8"/>
+                            <path d="M8 11h8"/>
+                            <path d="M8 15h4"/>
+                        </svg>
+                    </div>
+                    <p>No predictions yet</p>
+                    <span>Enter a period number and click Predict</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Wingo Predict AI Tool &mdash; AI Real Panel System</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
