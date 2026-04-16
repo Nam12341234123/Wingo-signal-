@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wingo Predict AI Tool</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-grid"></div>
+    <div class="bg-particles" id="particles"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="2.5"/>
+                        <path d="M12 20L18 26L28 14" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00f0ff"/>
+                                <stop offset="100%" stop-color="#7b2dff"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>WINGO <span class="gradient-text">PREDICT</span></h1>
+                    <p class="logo-subtitle">AI Analysis System</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-chip">
+                    <span class="stat-dot pulse-green"></span>
+                    <span>AI Server Online</span>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-icon">&#9889;</span>
+                    <span>v3.0 Ultra</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Upload Section -->
+        <section class="upload-section glass-card" id="uploadSection">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <path d="M21 15l-5-5L5 21"/>
+                    </svg>
+                </div>
+                <h2>Chart Screenshot Input</h2>
+                <span class="badge">STEP 1</span>
+            </div>
+            
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content" id="uploadContent">
+                    <div class="upload-icon-wrapper">
+                        <svg class="upload-icon" viewBox="0 0 64 64" fill="none">
+                            <rect x="8" y="8" width="48" height="48" rx="8" stroke="url(#upGrad)" stroke-width="2" stroke-dasharray="6 4"/>
+                            <path d="M32 22V42M22 32h20" stroke="url(#upGrad)" stroke-width="2.5" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="upGrad" x1="8" y1="8" x2="56" y2="56">
+                                    <stop offset="0%" stop-color="#00f0ff"/>
+                                    <stop offset="100%" stop-color="#7b2dff"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <p class="upload-text">Drop chart screenshot here</p>
+                    <p class="upload-subtext">or click to browse files</p>
+                    <span class="upload-formats">PNG, JPG, JPEG, WEBP</span>
+                </div>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-area hidden" id="previewArea">
+                <div class="preview-header">
+                    <span class="preview-label">Uploaded Chart</span>
+                    <button class="btn-icon" id="clearImage" title="Remove image">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="preview-image-wrapper">
+                    <img id="previewImage" alt="Chart Preview">
+                    <div class="scan-line" id="scanLine"></div>
+                </div>
+                <div class="image-info" id="imageInfo"></div>
+            </div>
+        </section>
+
+        <!-- Analysis Button Section -->
+        <section class="analysis-section">
+            <button class="analyze-btn" id="analyzeBtn" disabled>
+                <div class="btn-bg"></div>
+                <div class="btn-content">
+                    <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2a10 10 0 1 0 10 10"/>
+                        <path d="M12 2v10l7-7"/>
+                    </svg>
+                    <span class="btn-text">ANALYZE WITH AI</span>
+                    <span class="btn-subtext">Real AI Server Prediction</span>
+                </div>
+                <div class="btn-shine"></div>
+            </button>
+            <div class="analyze-status hidden" id="analyzeStatus">
+                <div class="status-spinner"></div>
+                <span id="statusText">Connecting to AI Server...</span>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section hidden" id="resultsSection">
+            <div class="results-header">
+                <h2>AI Prediction Results</h2>
+                <div class="confidence-meter">
+                    <span>Confidence</span>
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="confidenceFill"></div>
+                    </div>
+                    <span class="meter-value" id="confidenceValue">0%</span>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <!-- Big/Small Prediction -->
+                <div class="result-card glass-card" id="bigSmallCard">
+                    <div class="result-card-header">
+                        <div class="result-icon big-small-icon">
+                            <svg viewBox="0 0 32 32" fill="none">
+                                <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/>
+                                <text x="16" y="13" text-anchor="middle" fill="currentColor" font-size="8" font-weight="bold">B</text>
+                                <text x="16" y="24" text-anchor="middle" fill="currentColor" font-size="7">S</text>
+                                <line x1="6" y1="16" x2="26" y2="16" stroke="currentColor" stroke-width="0.5"/>
+                            </svg>
+                        </div>
+                        <h3>Big / Small</h3>
+                        <span class="result-badge" id="bsBadge">--</span>
+                    </div>
+                    <div class="result-body">
+                        <div class="prediction-display" id="bsPrediction">
+                            <span class="prediction-value">--</span>
+                        </div>
+                        <div class="prediction-bars">
+                            <div class="bar-item">
+                                <span class="bar-label">BIG</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill big-fill" id="bigBar" style="width:0%"></div>
+                                </div>
+                                <span class="bar-pct" id="bigPct">0%</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-label">SMALL</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill small-fill" id="smallBar" style="width:0%"></div>
+                                </div>
+                                <span class="bar-pct" id="smallPct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Number Prediction -->
+                <div class="result-card glass-card" id="numberCard">
+                    <div class="result-card-header">
+                        <div class="result-icon number-icon">
+                            <svg viewBox="0 0 32 32" fill="none">
+                                <rect x="3" y="3" width="26" height="26" rx="6" stroke="currentColor" stroke-width="1.5"/>
+                                <text x="16" y="21" text-anchor="middle" fill="currentColor" font-size="14" font-weight="bold">#</text>
+                            </svg>
+                        </div>
+                        <h3>Number</h3>
+                        <span class="result-badge" id="numBadge">--</span>
+                    </div>
+                    <div class="result-body">
+                        <div class="number-prediction-display" id="numPrediction">
+                            <div class="number-wheel" id="numberWheel">
+                                <span class="wheel-number">-</span>
+                            </div>
+                        </div>
+                        <div class="number-grid" id="numberGrid">
+                            <!-- Numbers 0-9 will be populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Colour Prediction -->
+                <div class="result-card glass-card" id="colourCard">
+                    <div class="result-card-header">
+                        <div class="result-icon colour-icon">
+                            <svg viewBox="0 0 32 32" fill="none">
+                                <circle cx="12" cy="14" r="7" fill="#ff3b5c" opacity="0.7"/>
+                                <circle cx="20" cy="14" r="7" fill="#4dff4d" opacity="0.7"/>
+                                <circle cx="16" cy="21" r="7" fill="#a855f7" opacity="0.7"/>
+                            </svg>
+                        </div>
+                        <h3>Colour</h3>
+                        <span class="result-badge" id="colBadge">--</span>
+                    </div>
+                    <div class="result-body">
+                        <div class="colour-prediction-display" id="colPrediction">
+                            <div class="colour-orb" id="colourOrb"></div>
+                            <span class="colour-name" id="colourName">--</span>
+                        </div>
+                        <div class="colour-bars">
+                            <div class="colour-bar-item">
+                                <div class="colour-dot red-dot"></div>
+                                <span>Red</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill red-fill" id="redBar" style="width:0%"></div>
+                                </div>
+                                <span class="bar-pct" id="redPct">0%</span>
+                            </div>
+                            <div class="colour-bar-item">
+                                <div class="colour-dot green-dot"></div>
+                                <span>Green</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill green-fill" id="greenBar" style="width:0%"></div>
+                                </div>
+                                <span class="bar-pct" id="greenPct">0%</span>
+                            </div>
+                            <div class="colour-bar-item">
+                                <div class="colour-dot violet-dot"></div>
+                                <span>Violet</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill violet-fill" id="violetBar" style="width:0%"></div>
+                                </div>
+                                <span class="bar-pct" id="violetPct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pattern Analysis -->
+            <div class="pattern-section glass-card" id="patternSection">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3v18h18"/>
+                            <path d="M7 16l4-8 4 4 4-10"/>
+                        </svg>
+                    </div>
+                    <h2>Pattern Analysis</h2>
+                </div>
+                <div class="pattern-content">
+                    <div class="pattern-chart" id="patternChart">
+                        <canvas id="patternCanvas"></canvas>
+                    </div>
+                    <div class="pattern-info">
+                        <div class="pattern-item">
+                            <span class="pattern-label">Pattern Detected</span>
+                            <span class="pattern-value" id="patternType">--</span>
+                        </div>
+                        <div class="pattern-item">
+                            <span class="pattern-label">Trend Direction</span>
+                            <span class="pattern-value" id="trendDirection">--</span>
+                        </div>
+                        <div class="pattern-item">
+                            <span class="pattern-label">Signal Strength</span>
+                            <span class="pattern-value" id="signalStrength">--</span>
+                        </div>
+                        <div class="pattern-item">
+                            <span class="pattern-label">Next Period</span>
+                            <span class="pattern-value" id="nextPeriod">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Log -->
+            <div class="history-section glass-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h2>Prediction History</h2>
+                    <button class="btn-clear" id="clearHistory">Clear</button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="history-empty">No predictions yet</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Wingo Predict AI Tool &mdash; Real AI Server Analysis System &mdash; v3.0 Ultra</p>
+    </footer>
+
+    <script src="js/ai-engine.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
